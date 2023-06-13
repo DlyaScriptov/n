@@ -31,7 +31,7 @@ apt-get -y -q install jitsi-meet
 apt-get -y -q install socat certbot
 
 sed -i -e 's/EMAIL=$1/EMAIL=$jitsiEmail/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
-sed -i -e 's/You need to agree to the ACME server\'s Subscriber Agreement (https:\/\/letsencrypt.org\/documents\/LE-SA-v1.1.1-August-1-2016.pdf) /Ваш E-Mail (Vash E-Mail):/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
+sed -i -e 's/You need to agree to the ACME server\'s Subscriber Agreement (https:\/\/letsencrypt.org\/documents\/LE-SA-v1.1.1-August-1-2016.pdf) /Ваш E-Mail:/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
 sed -i -e 's/"by providing an email address for important account notifications"/$EMAIL/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
 sed -i -e 's/echo -n "Enter your email and press [ENTER]: "/#echo -n "Enter your email and press [ENTER]: "/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
 sed -i -e 's/read EMAIL/#read EMAIL/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
