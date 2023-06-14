@@ -1,0 +1,16 @@
+[Unit]
+Description=vsm veb core NAME_DOMEN application
+
+[Service]
+WorkingDirectory=/var/www/html/NAME_DOMEN
+ExecStart=/usr/bin/dotnet /var/www/html/NAME_DOMEN/VSM.Web.Core.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=NAME_DOMEN
+User=www-data
+
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+[Install]
+
+WantedBy=multi-user.target
