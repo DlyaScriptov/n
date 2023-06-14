@@ -13,12 +13,16 @@ read -p "Введите пароль организатора конференц
 apt-get -y -q install curl
 apt-get -y -q install debconf-utils
 apt-get -y -q install apt-transport-https
+apt-get -y -q install ufw
 
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
 ufw allow 80/tcp
 ufw allow 443/tcp
 ufw allow 10000/udp
 ufw allow 5349/tcp
-jitsiPasswordOrganizer
+sudo ufw enable
+
 iptables -I INPUT -p tcp --match multiport --dports 80,443 -j ACCEPT
 iptables -I INPUT -p udp --dport 10000 -j ACCEPT
 iptables -I INPUT -p tcp --dport 5349 -j ACCEPT
