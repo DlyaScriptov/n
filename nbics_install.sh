@@ -34,6 +34,15 @@ if [ ! -d "$FILE" ]; then
     mkdir /home/download
 fi
 
+FILE2=/var/www
+if [ ! -d "$FILE2" ]; then
+    mkdir /var/www
+fi
+
+FILE3=/var/www/html
+if [ ! -d "$FILE3" ]; then
+    mkdir /var/www/html
+fi
 
 
 
