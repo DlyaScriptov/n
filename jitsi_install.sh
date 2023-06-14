@@ -1,5 +1,9 @@
 #!/bin/bash
 
+domainNameForJitsi=A
+
+read -p "Введите имя домена для Jitsi: " domainNameForJitsi
+
 ufw allow 80/tcp
 ufw allow 443/tcp
 ufw allow 10000/udp
@@ -15,7 +19,7 @@ netfilter-persistent save
 #apt-get -y -q install prosody
 #apt-get -y -q remove prosody
 
-hostnamectl set-hostname media3.nbics.net
+hostnamectl set-hostname $domainNameForJitsi
 
 echo deb http://packages.prosody.im/debian $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list
 wget https://prosody.im/files/prosody-debian-packages.key -O- | sudo apt-key add -
@@ -24,7 +28,7 @@ curl https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > 
 echo 'deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/' | sudo tee /etc/apt/sources.list.d/jitsi-stable.list > /dev/null
 apt update
 
-#echo “jitsi-videobridge jitsi-videobridge/jvb-hostname string YOUR-DNS-NAME” | debconf-set-selections
+#echo “jitsi-videobridge jitsi-videobridge/jvb-hostname string $domainNameForJitsi” | debconf-set-selections
 #export DEBIAN_FRONTEND=noninteractive
 
 apt-get -y -q install jitsi-meet
