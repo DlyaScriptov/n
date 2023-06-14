@@ -3,6 +3,12 @@
 domainNameForJitsi=A
 
 read -p "Введите имя домена для Jitsi: " domainNameForJitsi
+read -p "Введите логин организатора конференции: " jitsiLoginOrganizer
+read -p "Введите пароль организатора конференции: " jitsiPasswordOrganizer
+
+apt-get -y -q install curl
+apt-get -y -q install debconf-utils
+apt-get -y -q install apt-transport-https
 
 ufw allow 80/tcp
 ufw allow 443/tcp
@@ -28,17 +34,17 @@ curl https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > 
 echo 'deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/' | sudo tee /etc/apt/sources.list.d/jitsi-stable.list > /dev/null
 apt update
 
-echo “jitsi-videobridge jitsi-videobridge/jvb-hostname string $domainNameForJitsi” | debconf-set-selections
-export DEBIAN_FRONTEND=noninteractive
+#echo "jitsi-videobridge jitsi-videobridge/jvb-hostname string $domainNameForJitsi" | debconf-set-selections
+#export DEBIAN_FRONTEND=noninteractive
 
 apt-get -y -q install jitsi-meet
 apt-get -y -q install socat certbot
 
-sed -i -e 's/EMAIL=$1/EMAIL=$jitsiEmail/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
-sed -i -e 's/You need to agree to the ACME server\'s Subscriber Agreement (https:\/\/letsencrypt.org\/documents\/LE-SA-v1.1.1-August-1-2016.pdf) /Ваш E-Mail:/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
-sed -i -e 's/"by providing an email address for important account notifications"/$EMAIL/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
-sed -i -e 's/echo -n "Enter your email and press [ENTER]: "/#echo -n "Enter your email and press [ENTER]: "/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
-sed -i -e 's/read EMAIL/#read EMAIL/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
+#sed -i -e 's/EMAIL=$1/EMAIL=$jitsiEmail/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
+#sed -i -e 's/You need to agree to the ACME server\'s Subscriber Agreement (https:\/\/letsencrypt.org\/documents\/LE-SA-v1.1.1-August-1-2016.pdf) /Ваш E-Mail:/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
+#sed -i -e 's/"by providing an email address for important account notifications"/$EMAIL/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
+#sed -i -e 's/echo -n "Enter your email and press [ENTER]: "/#echo -n "Enter your email and press [ENTER]: "/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
+#sed -i -e 's/read EMAIL/#read EMAIL/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
 
 /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
 apt-get -y -q install liblua5.1-0-dev liblua5.2-dev liblua50-dev
@@ -46,10 +52,15 @@ apt-get -y install libunbound-dev
 luarocks install luaunbound
 chmod a+x /etc/jitsi/jicofo/
 
-sed -i -e 's/authentication = "jitsi-anonymous" -- do not delete me/authentication = "internal_hashed" -- do not delete me/' /etc/prosody/conf.avail/media3.nbics.net.cfg.lua
-echo 'VirtualHost "guest.media3.nbics.net"' >> /etc/prosody/conf.avail/media3.nbics.net.cfg.lua
-echo '    authentication = "anonymous"' >> /etc/prosody/conf.avail/media3.nbics.net.cfg.lua
-echo '    c2s_require_encryption = false' >> /etc/prosody/conf.avail/media3.nbics.net.cfg.lua
+cd /etc/prosody/conf.avail/
+
+sed -i -e 's/authentication = "jitsi-anonymous" -- do not delete me/authentication = "internal_hashed" -- do not delete me/' $domainNameForJitsi.cfg.lua
+echo 'VirtualHost "guest.'$domainNameForJitsi'"' >> $domainNameForJitsi.cfg.lua
+echo '    authentication = "anonymous"' >> $domainNameForJitsi.cfg.lua
+echo '    c2s_require_encryption = false' >> $domainNameForJitsi.cfg.lua
+
+
+
 sed -i -e "s/domain: 'media3.nbics.net',/domain: 'media3.nbics.net',anonymousdomain: 'guest.media3.nbics.net',/" /etc/jitsi/meet/media3.nbics.net-config.js
 sed -i -e '16a\  authentication: { '  /etc/jitsi/jicofo/jicofo.conf
 sed -i -e '17a\    enabled: true'  /etc/jitsi/jicofo/jicofo.conf
