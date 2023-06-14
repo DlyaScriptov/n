@@ -3,6 +3,7 @@ nbicsNameDataBase=A
 nbicsPasswordDataBase=A
 
 pwdScan=$(pwd)
+hostnameScan=$(hostname)
 
 read -p "Введите имя домена для NBICS: " nbicsNameDomain
 read -p "Введите имя базы данных: " nbicsNameDataBase
@@ -26,6 +27,8 @@ sudo ufw allow 57001:65535/udp
 sudo ufw allow 1433
 sudo ufw allow from 127.0.0.1 to any port 1433
 sudo ufw enable
+sudo ufw delete allow 1433
+
 
 
 
