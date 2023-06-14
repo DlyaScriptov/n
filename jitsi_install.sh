@@ -65,14 +65,14 @@ echo '    c2s_require_encryption = false' >> $domainNameForJitsi.cfg.lua
 
 cd /etc/jitsi/meet/
 
-sed -i -e "s/domain: 'media3.nbics.net',/domain: 'media3.nbics.net',anonymousdomain: 'guest.media3.nbics.net',/" $domainNameForJitsi-config.js
+sed -i -e "s/domain: '$domainNameForJitsi',/domain: '$domainNameForJitsi',anonymousdomain: 'guest.$domainNameForJitsi',/" $domainNameForJitsi-config.js
 
 cd $pwdScan
 
 sed -i -e '16a\  authentication: { '  /etc/jitsi/jicofo/jicofo.conf
 sed -i -e '17a\    enabled: true'  /etc/jitsi/jicofo/jicofo.conf
 sed -i -e '18a\    type: XMPP'  /etc/jitsi/jicofo/jicofo.conf
-sed -i -e '19a\    login-url: media3.nbics.net'  /etc/jitsi/jicofo/jicofo.conf
+sed -i -e "19a\    login-url: $domainNameForJitsi"  /etc/jitsi/jicofo/jicofo.conf
 sed -i -e '20a\  }'  /etc/jitsi/jicofo/jicofo.conf
 
 prosodyctl register $jitsiLoginOrganizer $domainNameForJitsi $jitsiPasswordOrganizer
