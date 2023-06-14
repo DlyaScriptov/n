@@ -14,7 +14,7 @@ ufw allow 80/tcp
 ufw allow 443/tcp
 ufw allow 10000/udp
 ufw allow 5349/tcp
-
+jitsiPasswordOrganizer
 iptables -I INPUT -p tcp --match multiport --dports 80,443 -j ACCEPT
 iptables -I INPUT -p udp --dport 10000 -j ACCEPT
 iptables -I INPUT -p tcp --dport 5349 -j ACCEPT
@@ -68,4 +68,4 @@ sed -i -e '18a\    type: XMPP'  /etc/jitsi/jicofo/jicofo.conf
 sed -i -e '19a\    login-url: media3.nbics.net'  /etc/jitsi/jicofo/jicofo.conf
 sed -i -e '20a\  }'  /etc/jitsi/jicofo/jicofo.conf
 
-prosodyctl register oleg media3.nbics.net Kondratenko2357
+prosodyctl register $jitsiLoginOrganizer $domainNameForJitsi $jitsiPasswordOrganizer
