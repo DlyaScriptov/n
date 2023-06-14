@@ -1,6 +1,10 @@
 #!/bin/bash
 
 domainNameForJitsi=A
+jitsiLoginOrganizer=A
+jitsiPasswordOrganizer=A
+
+pwdScan=$(pwd)
 
 read -p "Введите имя домена для Jitsi: " domainNameForJitsi
 read -p "Введите логин организатора конференции: " jitsiLoginOrganizer
@@ -59,9 +63,12 @@ echo 'VirtualHost "guest.'$domainNameForJitsi'"' >> $domainNameForJitsi.cfg.lua
 echo '    authentication = "anonymous"' >> $domainNameForJitsi.cfg.lua
 echo '    c2s_require_encryption = false' >> $domainNameForJitsi.cfg.lua
 
+cd /etc/jitsi/meet/
 
+sed -i -e "s/domain: 'media3.nbics.net',/domain: 'media3.nbics.net',anonymousdomain: 'guest.media3.nbics.net',/" $domainNameForJitsi-config.js
 
-sed -i -e "s/domain: 'media3.nbics.net',/domain: 'media3.nbics.net',anonymousdomain: 'guest.media3.nbics.net',/" /etc/jitsi/meet/media3.nbics.net-config.js
+cd $pwdScan
+
 sed -i -e '16a\  authentication: { '  /etc/jitsi/jicofo/jicofo.conf
 sed -i -e '17a\    enabled: true'  /etc/jitsi/jicofo/jicofo.conf
 sed -i -e '18a\    type: XMPP'  /etc/jitsi/jicofo/jicofo.conf
@@ -69,3 +76,5 @@ sed -i -e '19a\    login-url: media3.nbics.net'  /etc/jitsi/jicofo/jicofo.conf
 sed -i -e '20a\  }'  /etc/jitsi/jicofo/jicofo.conf
 
 prosodyctl register $jitsiLoginOrganizer $domainNameForJitsi $jitsiPasswordOrganizer
+
+sudo systemctl restart prosody jicofo jitsi-videobridge2
