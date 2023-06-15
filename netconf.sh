@@ -24,6 +24,8 @@ apt-get -y -q install openssh-server
 
 systemctl start sshd
 
+apt-get -y -q install ufw
+
 # Открываем порты для SSH
 ufw default deny incoming
 ufw default allow outgoing
