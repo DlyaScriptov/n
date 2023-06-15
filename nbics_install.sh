@@ -9,11 +9,12 @@ read -p "Введите имя домена для NBICS: " nbicsNameDomain
 #read -p "Введите имя базы данных: " nbicsNameDataBase
 read -p "Введите пароль администратора базы данных: " nbicsPasswordDataBase
 
-# 1. Открытие портов
+apt-get -y -q install mlocate
 apt-get -y -q install curl
 apt-get -y -q install apt-transport-https
 apt-get -y -q install ufw
 
+# 1. Открытие портов
 ufw default deny incoming
 ufw default allow outgoing
 ufw allow 8080/tcp
