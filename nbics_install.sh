@@ -71,4 +71,25 @@ else
     sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 fi
 
+# 3. Проверяем, установлен ли веб-сервер Nginx
+nginxCheckInstall=$(locate --basename '\nginx')
 
+checkVarNginxCheck=`cat <<_EOF_
+/etc/nginx
+/etc/default/nginx
+/etc/init.d/nginx
+/etc/logrotate.d/nginx
+/etc/ufw/applications.d/nginx
+/usr/lib/nginx
+/usr/sbin/nginx
+/usr/share/nginx
+/usr/share/doc/nginx
+/var/lib/nginx
+/var/log/nginx
+_EOF_
+`
+if [[ ! $nginxCheckInstall = $checkVarNginxCheck ]]
+then
+    apt-get -y -q install nginx
+    systemctl enable nginx
+fi
