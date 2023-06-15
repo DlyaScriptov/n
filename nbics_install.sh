@@ -30,7 +30,7 @@ ufw allow from 127.0.0.1 to any port 1433
 ufw enable
 ufw delete allow 1433
 
-# Пjcktljdfntkmyfzроверка каталогов и файлов на существование
+# Последовательная проверка каталогов и файлов на существование
 FILE=/home/download
 if [ ! -d "$FILE" ]; then
     mkdir /home/download
@@ -46,12 +46,22 @@ if [ ! -d "$FILE3" ]; then
     mkdir /var/www/html
 fi
 
-FILE4=/etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+cd /var/www/html
+
+FILE4=$nbicsNameDomain
 if [ ! -d "$FILE4" ]; then
+    mkdir $nbicsNameDomain
+fi
+
+cd $pwdScan
+
+FILE5=/etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+if [ ! -d "$FILE5" ]; then
     touch /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 fi
 
-
+# Заполняем файл службы Kestrel из шаблона
+cp ./n/files/kestrel-NAME_DOMAIN-service.service /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 
 
 
