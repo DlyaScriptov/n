@@ -60,6 +60,9 @@ cd $pwdScan
 FILE5=/etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 if [ ! -d "$FILE5" ]; then
     touch /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+else
+    echo -n > /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+    cp ./n/files/kestrel-NAME_DOMAIN-service.service /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 fi
 
 # 3. Заполняем файл службы Kestrel из шаблона
