@@ -64,5 +64,6 @@ fi
 # 3. Заполняем файл службы Kestrel из шаблона
 cp ./n/files/kestrel-NAME_DOMAIN-service.service /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 
-
+# 4. Вписываем имя домена в шаблон файла службы Kestrel
+sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 
