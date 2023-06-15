@@ -9,7 +9,7 @@ read -p "Введите имя домена для NBICS: " nbicsNameDomain
 #read -p "Введите имя базы данных: " nbicsNameDataBase
 read -p "Введите пароль администратора базы данных: " nbicsPasswordDataBase
 
-# Открытие портов
+# 1. Открытие портов
 apt-get -y -q install curl
 apt-get -y -q install apt-transport-https
 apt-get -y -q install ufw
@@ -30,7 +30,7 @@ ufw allow from 127.0.0.1 to any port 1433
 ufw enable
 ufw delete allow 1433
 
-# Последовательная проверка каталогов и файлов на существование
+# 2. Последовательная проверка каталогов и файлов на существование
 FILE=/home/download
 if [ ! -d "$FILE" ]; then
     mkdir /home/download
@@ -48,9 +48,10 @@ fi
 
 cd /var/www/html
 
+# 2.1. Эта проверка инвертирована
 FILE4=$nbicsNameDomain
-if [ ! -d "$FILE4" ]; then
-    mkdir $nbicsNameDomain
+if [ -d "$FILE4" ]; then
+    rm -rf $nbicsNameDomain
 fi
 
 cd $pwdScan
@@ -60,7 +61,7 @@ if [ ! -d "$FILE5" ]; then
     touch /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 fi
 
-# Заполняем файл службы Kestrel из шаблона
+# 3. Заполняем файл службы Kestrel из шаблона
 cp ./n/files/kestrel-NAME_DOMAIN-service.service /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 
 
