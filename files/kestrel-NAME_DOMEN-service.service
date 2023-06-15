@@ -1,12 +1,12 @@
 [Unit]
-Description=vsm veb core NAME_DOMEN application
+Description=vsm veb core NAME_DOMAIN application
 
 [Service]
-WorkingDirectory=/var/www/html/NAME_DOMEN
-ExecStart=/usr/bin/dotnet /var/www/html/NAME_DOMEN/VSM.Web.Core.dll
+WorkingDirectory=/var/www/html/NAME_DOMAIN
+ExecStart=/usr/bin/dotnet /var/www/html/NAME_DOMAIN/VSM.Web.Core.dll
 Restart=always
 RestartSec=10
-SyslogIdentifier=NAME_DOMEN
+SyslogIdentifier=NAME_DOMAIN
 User=www-data
 
 Environment=ASPNETCORE_ENVIRONMENT=Production
