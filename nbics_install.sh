@@ -57,6 +57,7 @@ fi
 
 cd $pwdScan
 
+# 2.2. Проверка файла службы Kestrel еа существование. Не существует - создать. Существует - заполнить актуальным текстом
 FILE5=/etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 if [ ! -d "$FILE5" ]; then
     touch /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
