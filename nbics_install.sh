@@ -37,41 +37,8 @@ if [ ! -d "$FILE" ]; then
     mkdir /home/download
 fi
 
-FILE2=/var/www
-if [ ! -d "$FILE2" ]; then
-    mkdir /var/www
-fi
-
-FILE3=/var/www/html
-if [ ! -d "$FILE3" ]; then
-    mkdir /var/www/html
-fi
-
-cd /var/www/html
-
-# 2.1. Эта проверка инвертирована
-FILE4=$nbicsNameDomain
-if [ -d "$FILE4" ]; then
-    rm -rf $nbicsNameDomain
-fi
-
-cd $pwdScan
-
-# 2.2. Проверка файла службы Kestrel еа существование 
-       # Не существует - создать, скопировать туда шаблон и вписать доменное имя 
-       # Существует - очистить, скопировать туда шаблон и вписать доменное имя
-FILE5=/etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
-if [ ! -d "$FILE5" ]; then
-    touch /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
-    cp ./n/files/kestrel-NAME_DOMAIN-service.service /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
-    sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
-else
-    echo -n > /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
-    cp ./n/files/kestrel-NAME_DOMAIN-service.service /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
-    sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
-fi
-
-# 3. Проверяем, установлен ли веб-сервер Nginx
+# 2.1. Проверяем, установлен ли веб-сервер Nginx
+       # Если нет - удаляем возможные остатки программы, и устанавливаем с нуля
 nginxCheckInstall=$(locate --basename '\nginx')
 
 checkVarNginxCheck=`cat <<_EOF_
@@ -90,6 +57,48 @@ _EOF_
 `
 if [[ ! $nginxCheckInstall = $checkVarNginxCheck ]]
 then
+    systemctl stop nginx
+    systemctl disable nginx
+    apt-get -y -q purge nginx nginx-common
+    apt-get -y -q autoremove
+    rm -Rf /etc/nginx/*
+    
     apt-get -y -q install nginx
     systemctl enable nginx
 fi
+
+FILE2=/var/www
+if [ ! -d "$FILE2" ]; then
+    mkdir /var/www
+fi
+
+FILE3=/var/www/html
+if [ ! -d "$FILE3" ]; then
+    mkdir /var/www/html
+fi
+
+cd /var/www/html
+
+# 2.2. Эта проверка инвертирована
+FILE4=$nbicsNameDomain
+if [ -d "$FILE4" ]; then
+    rm -rf $nbicsNameDomain
+fi
+
+cd $pwdScan
+
+# 2.3. Проверка файла службы Kestrel еа существование 
+       # Не существует - создать, скопировать туда шаблон и вписать доменное имя 
+       # Существует - очистить, скопировать туда шаблон и вписать доменное имя
+FILE5=/etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+if [ ! -d "$FILE5" ]; then
+    touch /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+    cp ./n/files/kestrel-NAME_DOMAIN-service.service /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+    sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+else
+    echo -n > /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+    cp ./n/files/kestrel-NAME_DOMAIN-service.service /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+    sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
+fi
+
+
