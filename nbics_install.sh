@@ -1,12 +1,12 @@
 nbicsNameDomain=A
-nbicsNameDataBase=A
+#nbicsNameDataBase=A
 nbicsPasswordDataBase=A
 
 pwdScan=$(pwd)
 hostnameScan=$(hostname)
 
 read -p "Введите имя домена для NBICS: " nbicsNameDomain
-read -p "Введите имя базы данных: " nbicsNameDataBase
+#read -p "Введите имя базы данных: " nbicsNameDataBase
 read -p "Введите пароль администратора базы данных: " nbicsPasswordDataBase
 
 apt-get -y -q install curl
