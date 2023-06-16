@@ -1,7 +1,7 @@
 server {
             listen 80;
-            server_name NAME_DOMEN;
-            root /var/www/html/NAME_DOMEN;
+            server_name NAME_DOMAIN;
+            root /var/www/html/NAME_DOMAIN;
             keepalive_timeout 60;
     location / {
         proxy_pass http://localhost:5000;
