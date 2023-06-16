@@ -130,10 +130,17 @@ else
 fi
 # ........................................
 
-# 2.5. Создание каталогов для для базы данных
+# 2.5. Проверка ссылки на файл default
+FILE7=/etc/nginx/sites-enabled/default
+if [ ! -L "$FILE7" ]; then
+    ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+fi
+# ........................................
+
+# 2.6. Создание каталогов для для базы данных
 #      Предварительная проверка каталогов на существование
-FILE7=/var/opt/db
-if [ ! -d "$FILE7" ]; then
+FILE8=/var/opt/db
+if [ ! -d "$FILE8" ]; then
     mkdir /var/opt/db /var/opt/db/BACKUP /var/opt/db/DATA /var/opt/db/LOG
     chown -R mssql:mssql /var/opt/db/
 else
@@ -178,8 +185,8 @@ mv update-school-sample.nbics.net $nbicsNameDomain
 
 # 6. Копируем каталог с сайтом и базу данных и удаляем оригиналы
 # 6.1. Копируем каталог с сайтом
-FILE8=/var/www/html/"$nbicsNameDomain"
-if [ ! -d "$FILE8" ]; then
+FILE9=/var/www/html/"$nbicsNameDomain"
+if [ ! -d "$FILE9" ]; then
     cp -r $nbicsNameDomain /var/www/html/"$nbicsNameDomain"
 else
     rm -rf /var/www/html/"$nbicsNameDomain"
