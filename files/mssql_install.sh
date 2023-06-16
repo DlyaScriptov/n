@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # Use the following variables to control your install:
 
@@ -84,7 +84,7 @@ systemctl restart mssql-server
 # Connect to server and get the version:
 counter=1
 errstatus=1
-while [ $counter -le 50 ] && [ $errstatus = 1 ]
+while [ $counter -le 5 ] && [ $errstatus = 1 ]
 do
   echo Waiting for SQL Server to start...
   sleep 3s
