@@ -94,7 +94,7 @@ fi
 cd $pwdScan
 # ........................................
 
-# 2.3. Проверка файла службы Kestrel еа существование 
+# 2.3. Проверка файла службы Kestrel на существование 
 #      Не существует - создать, скопировать туда шаблон и вписать доменное имя 
 #      Существует - очистить, скопировать туда шаблон и вписать доменное имя
 FILE5=/etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
@@ -136,17 +136,18 @@ fi
 # ==================================================================
 
 # 3. Скачиваем архивы с сайтом и базой данных
-# 3.1. Скачиваем архив с сайтом
-wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC" -O update-school-sample.nbics.net.zip && rm -rf /tmp/cookies.txt
-# ........................................
+cd /home/download
+FILElinks1=update-school-sample.nbics.net.zip
+if [ ! -d "$FILElinks1" ]; then
+    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC" -O update-school-sample.nbics.net.zip && rm -rf /tmp/cookies.txt
+fi
 
-# 3.2. Скачиваем архив с базой данных
-wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--" -O TestDB.zip && rm -rf /tmp/cookies.txt
+FILElinks2=TestDB.zip
+if [ ! -d "$FILElinks2" ]; then
+    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--" -O TestDB.zip && rm -rf /tmp/cookies.txt
 # ==================================================================
 
 # 4. Распаковываем архивы
-cd /home/download
-
 # 4.1. Распаковываем архив с сайтом
 unzip /home/download/update-school-sample.nbics.net.zip
 # ........................................
