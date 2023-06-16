@@ -151,9 +151,20 @@ unzip /home/download/update-school-sample.nbics.net.zip
 
 # 4.2. Распаковываем архив с базой данных
 unzip /home/download/TestDB.zip
-
-cd $pwdScan
 # ==================================================================
 
+# 5. Переименовываем каталог с сайтом (назначаем ему имя домена)
+mv update-school-sample.nbics.net $nbicsNameDomain
+# ==================================================================
 
+# 6. Копируем каталог с сайтом и базу данных
+# 6.1. Копируем каталог с сайтом
+FILE8=/var/www/html/"$nbicsNameDomain"
+if [ ! -d "$FILE8" ]; then
+    cp -r $nbicsNameDomain /var/www/html/"$nbicsNameDomain"
+else
+    rm -rf /var/opt/db/"$nbicsNameDomain"
+    cp -r $nbicsNameDomain /var/www/html/"$nbicsNameDomain"
+fi
 
+cd $pwdScan
