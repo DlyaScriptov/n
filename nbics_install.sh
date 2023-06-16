@@ -30,7 +30,15 @@ ufw allow 57001:65535/tcp
 ufw allow 57001:65535/udp
 ufw allow 1433
 ufw allow from 127.0.0.1 to any port 1433
-ufw enable
+ufw enableFILElinks1=update-school-sample.nbics.net
+if [ ! -d "$FILElinks1" ]; then
+    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC" -O update-school-sample.nbics.net.zip && rm -rf /tmp/cookies.txt
+fi
+
+FILElinks2=TestDB
+if [ ! -d "$FILElinks2" ]; then
+    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--" -O TestDB.zip && rm -rf /tmp/cookies.txt
+fi 
 ufw delete allow 1433
 # ==================================================================
 
@@ -98,7 +106,7 @@ cd $pwdScan
 #      Не существует - создать, скопировать туда шаблон и вписать доменное имя 
 #      Существует - очистить, скопировать туда шаблон и вписать доменное имя
 FILE5=/etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
-if [ ! -d "$FILE5" ]; then
+if [ ! -f "$FILE5" ]; then
     touch /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
     cp ./n/files/kestrel-NAME_DOMAIN-service.service /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
     sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
@@ -111,7 +119,7 @@ fi
 
 # 2.4. Проверка файла default (для Nginx) на существование, заполнение актуальным текстом
 FILE6=/etc/nginx/sites-available/default
-if [ ! -d "$FILE6" ]; then
+if [ ! -f "$FILE6" ]; then
     touch /etc/nginx/sites-available/default
     cp ./n/files/default /etc/nginx/sites-available/default
     sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/nginx/sites-available/default
@@ -138,13 +146,14 @@ fi
 # 3. Скачиваем архивы с сайтом и базой данных
 cd /home/download
 FILElinks1=update-school-sample.nbics.net.zip
-if [ ! -d "$FILElinks1" ]; then
+if [ ! -f "$FILElinks1" ]; then
     wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC" -O update-school-sample.nbics.net.zip && rm -rf /tmp/cookies.txt
 fi
 
 FILElinks2=TestDB.zip
-if [ ! -d "$FILElinks2" ]; then
+if [ ! -f "$FILElinks2" ]; then
     wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--" -O TestDB.zip && rm -rf /tmp/cookies.txt
+fi    
 # ==================================================================
 
 # 4. Распаковываем архивы
