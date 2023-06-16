@@ -127,9 +127,11 @@ fi
 FILE7=/var/opt/db
 if [ ! -d "$FILE7" ]; then
     mkdir /var/opt/db /var/opt/db/BACKUP /var/opt/db/DATA /var/opt/db/LOG
+    chown -R mssql:mssql /var/opt/db/
 else
     rm -rf /var/opt/db
     mkdir /var/opt/db /var/opt/db/BACKUP /var/opt/db/DATA /var/opt/db/LOG
+    chown -R mssql:mssql /var/opt/db/
 fi
 # ==================================================================
 
