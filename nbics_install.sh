@@ -14,6 +14,7 @@ apt-get -y -q install curl
 apt-get -y -q install apt-transport-https
 apt-get -y -q install ufw
 apt-get -y -q install unzip
+# ==================================================================
 
 # 1. Открытие портов
 ufw default deny incoming
@@ -31,6 +32,7 @@ ufw allow 1433
 ufw allow from 127.0.0.1 to any port 1433
 ufw enable
 ufw delete allow 1433
+# ==================================================================
 
 # 2. Последовательная проверка каталогов и файлов на существование
      # При необходимости - создание нужных каталогов и файлов
@@ -38,6 +40,7 @@ FILE=/home/download
 if [ ! -d "$FILE" ]; then
     mkdir /home/download
 fi
+# ........................................
 
 # 2.1. Проверяем, установлен ли веб-сервер Nginx
        # Если нет - удаляем возможные остатки программы, и устанавливаем с нуля
@@ -80,6 +83,7 @@ if [ ! -d "$FILE3" ]; then
 fi
 
 cd /var/www/html
+# ........................................
 
 # 2.2. Эта проверка инвертирована
 FILE4=$nbicsNameDomain
@@ -88,6 +92,7 @@ if [ -d "$FILE4" ]; then
 fi
 
 cd $pwdScan
+# ........................................
 
 # 2.3. Проверка файла службы Kestrel еа существование 
        # Не существует - создать, скопировать туда шаблон и вписать доменное имя 
@@ -102,6 +107,7 @@ else
     cp ./n/files/kestrel-NAME_DOMAIN-service.service /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
     sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 fi
+# ........................................
 
 # 2.4. Проверка файла default (для Nginx) на существование, заполнение актуальным текстом
 FILE6=/etc/nginx/sites-available/default
@@ -114,6 +120,7 @@ else
     cp ./n/files/default /etc/nginx/sites-available/default
     sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/nginx/sites-available/default
 fi
+# ........................................
 
 # 2.5. Создание каталогов для для базы данных
        # Предварительная проверка каталогов на существование
@@ -124,11 +131,29 @@ else
     rm -rf /var/opt/db
     mkdir /var/opt/db /var/opt/db/BACKUP /var/opt/db/DATA /var/opt/db/LOG
 fi
+# ==================================================================
 
 # 3. Скачиваем архивы с сайтом и базой данных
 # 3.1. Скачиваем архив с сайтом
 wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC" -O update-school-sample.nbics.net.zip && rm -rf /tmp/cookies.txt
+# ........................................
 
 # 3.2. Скачиваем архив с базой данных
 wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--" -O TestDB.zip && rm -rf /tmp/cookies.txt
+# ==================================================================
+
+# 4. Распаковываем архивы
+cd /home/download
+
+# 4.1. Распаковываем архив с сайтом
+unzip /home/download/update-school-sample.nbics.net.zip
+# ........................................
+
+# 4.2. Распаковываем архив с базой данных
+unzip /home/download/TestDB.zip
+
+cd $pwdScan
+# ==================================================================
+
+
 
