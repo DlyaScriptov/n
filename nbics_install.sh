@@ -167,11 +167,16 @@ unzip /home/download/TestDB.zip
 
 # 5. Переименовываем каталог с сайтом (назначаем ему имя домена)
 #    И меняем настройки в файле appsettings.json
+# 5.1. Меняем настройки в файле appsettings.json
+echo -n > /home/download/update-school-sample.nbics.net/appsettings.json
+cd $pwdScan
+cp ./n/files/appsettings.json /home/download/update-school-sample.nbics.net/appsettings.json
+cd /home/download
+
 # 5.1. Переименовываем каталог с сайтом
 mv update-school-sample.nbics.net $nbicsNameDomain
 # ........................................
 
-# 5.2. Меняем настройки в файле appsettings.json
 
 
 # ==================================================================
