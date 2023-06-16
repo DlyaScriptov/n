@@ -209,3 +209,10 @@ cd $pwdScan
 
 # 7. Увеличиваем ограничение на размер файлов для Nginx
 sed -i -e '22a\    client_max_body_size 1000m'  /etc/nginx/nginx.conf
+# ==================================================================
+
+# 8. Устанавливаем SQL Server
+sed -i -e "s|<YourStrong!Passw0rd>|$nbicsPasswordDataBase|" ./files/mssql_install.sh
+sed -i -e "s|localhost|$hostnameScan|" ./files/mssql_install.sh
+
+source mssql_install.sh
