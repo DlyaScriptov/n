@@ -32,6 +32,7 @@ ufw enable
 ufw delete allow 1433
 
 # 2. Последовательная проверка каталогов и файлов на существование
+     # При необходимости - создание нужных каталогов и файлов
 FILE=/home/download
 if [ ! -d "$FILE" ]; then
     mkdir /home/download
@@ -102,8 +103,8 @@ else
 fi
 
 # 2.4. Проверка файла default (для Nginx) на существование, заполнение актуальным текстом
-FILE5=/etc/nginx/sites-available/default
-if [ ! -d "$FILE5" ]; then
+FILE6=/etc/nginx/sites-available/default
+if [ ! -d "$FILE6" ]; then
     touch /etc/nginx/sites-available/default
     cp ./n/files/default /etc/nginx/sites-available/default
     sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/nginx/sites-available/default
@@ -111,4 +112,14 @@ else
     echo -n > /etc/nginx/sites-available/default
     cp ./n/files/default /etc/nginx/sites-available/default
     sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/nginx/sites-available/default
+fi
+
+# 2.5. Создание каталогов для для базы данных
+       # Предварительная проверка каталогов на существование
+FILE7=/var/opt/db
+if [ ! -d "$FILE7" ]; then
+    mkdir /var/opt/db /var/opt/db/BACKUP /var/opt/db/DATA /var/opt/db/LOG
+else
+    rm -rf /var/opt/db
+    mkdir /var/opt/db /var/opt/db/BACKUP /var/opt/db/DATA /var/opt/db/LOG
 fi
