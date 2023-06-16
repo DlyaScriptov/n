@@ -163,8 +163,11 @@ FILE8=/var/www/html/"$nbicsNameDomain"
 if [ ! -d "$FILE8" ]; then
     cp -r $nbicsNameDomain /var/www/html/"$nbicsNameDomain"
 else
-    rm -rf /var/opt/db/"$nbicsNameDomain"
+    rm -rf /var/www/html/"$nbicsNameDomain"
     cp -r $nbicsNameDomain /var/www/html/"$nbicsNameDomain"
 fi
+
+# 6.2. Копируем базу данных
+cp TestDB.bak /var/opt/db/BACKUP/
 
 cd $pwdScan
