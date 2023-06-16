@@ -199,3 +199,7 @@ rm -rf $nbicsNameDomain
 rm -f TestDB.bak
 
 cd $pwdScan
+# ==================================================================
+
+# 7. Увеличиваем ограничение на размер файлов для Nginx
+sed -i -e '22a\    client_max_body_size 1000m'  /etc/nginx/nginx.conf
