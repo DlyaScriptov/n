@@ -101,4 +101,14 @@ else
     sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/systemd/system/kestrel-"$nbicsNameDomain"-service.service
 fi
 
-
+# 2.4. Проверка файла default (для Nginx) на существование, заполнение актуальным текстом
+FILE5=/etc/nginx/sites-available/default
+if [ ! -d "$FILE5" ]; then
+    touch /etc/nginx/sites-available/default
+    cp ./n/files/default /etc/nginx/sites-available/default
+    sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/nginx/sites-available/default
+else
+    echo -n > /etc/nginx/sites-available/default
+    cp ./n/files/default /etc/nginx/sites-available/default
+    sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" /etc/nginx/sites-available/default
+fi
