@@ -172,13 +172,14 @@ echo -n > /home/download/update-school-sample.nbics.net/appsettings.json
 cd $pwdScan
 cp ./n/files/appsettings.json /home/download/update-school-sample.nbics.net/appsettings.json
 cd /home/download
-
-# 5.1. Переименовываем каталог с сайтом
-mv update-school-sample.nbics.net $nbicsNameDomain
+sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" ./update-school-sample.nbics.net/appsettings.json
+sed -i -e "s|SA_PASSWORD_BD|$nbicsPasswordDataBase|" ./update-school-sample.nbics.net/appsettings.json
+sed -i -e "s|NAME_SERVER|$hostnameScan|" ./update-school-sample.nbics.net/appsettings.json
+sed -i -e "s|NAME_DATABASE|TestDB|" ./update-school-sample.nbics.net/appsettings.json
 # ........................................
 
-
-
+# 5.2. Переименовываем каталог с сайтом
+mv update-school-sample.nbics.net $nbicsNameDomain
 # ==================================================================
 
 # 6. Копируем каталог с сайтом и базу данных и удаляем оригиналы
