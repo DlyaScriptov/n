@@ -166,7 +166,7 @@ mv update-school-sample.nbics.net $nbicsNameDomain
 
 # ==================================================================
 
-# 6. Копируем каталог с сайтом и базу данных
+# 6. Копируем каталог с сайтом и базу данных и удаляем оригиналы
 # 6.1. Копируем каталог с сайтом
 FILE8=/var/www/html/"$nbicsNameDomain"
 if [ ! -d "$FILE8" ]; then
@@ -175,8 +175,17 @@ else
     rm -rf /var/www/html/"$nbicsNameDomain"
     cp -r $nbicsNameDomain /var/www/html/"$nbicsNameDomain"
 fi
+# ........................................
 
 # 6.2. Копируем базу данных
 cp TestDB.bak /var/opt/db/BACKUP/
+# ........................................
+
+# 6.3. [Позже реализовать цикл проверки копии и оригинала по размеру]
+# ........................................
+
+# 6.4. Удаляем распакованные оригиналы
+rm -rf $nbicsNameDomain
+rm -f TestDB.bak
 
 cd $pwdScan
