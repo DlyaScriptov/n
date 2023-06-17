@@ -216,4 +216,4 @@ sed -i -e '22a\    client_max_body_size 1000m'  /etc/nginx/nginx.conf
 sed -i -e "s|<YourStrong!Passw0rd>|$nbicsPasswordDataBase|" ./files/mssql_install.sh
 sed -i -e "s|localhost|$hostnameScan|" ./files/mssql_install.sh
 
-source mssql_install.sh
+source ./files/mssql_install.sh
