@@ -14,6 +14,7 @@ apt-get -y -q install curl
 apt-get -y -q install apt-transport-https
 apt-get -y -q install ufw
 apt-get -y -q install unzip
+apt-get -y -q install software-properties-common
 # ==================================================================
 
 # 1. Открытие портов
