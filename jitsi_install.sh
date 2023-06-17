@@ -14,6 +14,7 @@ apt-get -y -q install curl
 apt-get -y -q install debconf-utils
 apt-get -y -q install apt-transport-https
 apt-get -y -q install ufw
+apt-get -y -q install software-properties-common
 
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
