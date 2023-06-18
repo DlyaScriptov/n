@@ -221,6 +221,15 @@ apt-get -y -q install libgdiplus
 a31="  22. Установлены DotNET и библиотека libgdiplus"
 # ==================================================================
 
+# 11. Копируем файл SkiaSharp.dll в нужные каталоги и даём на него права
+cp /home/download/SkiaSharp.dll /var/www/html/"$nbicsNameDomain"/
+cp /home/download/SkiaSharp.dll /usr/lib/
+cd /usr/lib/
+chmod +x SkiaSharp.dll
+cd $pwdScan
+a32="  23. Скопирован файл SkiaSharp.dll в нужные каталоги и выданы на него права"
+
+
 # 9. Устанавливаем SQL Server
 #sed -i -e "s|<YourStrong!Passw0rd>|$nbicsPasswordDataBase|" ./files/mssql_install.sh
 #sed -i -e "s|localhost|$hostnameScan|" ./files/mssql_install.sh
