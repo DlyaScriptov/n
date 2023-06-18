@@ -190,7 +190,19 @@ sed -i -e '22a\    client_max_body_size 1000m'  /etc/nginx/nginx.conf
 a28="  18. Увеличено до 1000 ограничение на размер файлов для Nginx"
 # ==================================================================
 
-# 8. Устанавливаем SQL Server
+# 8. Устанавливаем DotNET
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+dpkg -i packages-microsoft-prod.deb
+rm -f packages-microsoft-prod.deb
+apt-get -y -q update
+apt-get -y -q install dotnet-sdk-7.0
+apt-get -y -q update
+apt-get -y -q install aspnetcore-runtime-7.0
+apt-get -y -q install libgdiplus
+
+# ==================================================================
+
+# 9. Устанавливаем SQL Server
 #sed -i -e "s|<YourStrong!Passw0rd>|$nbicsPasswordDataBase|" ./files/mssql_install.sh
 #sed -i -e "s|localhost|$hostnameScan|" ./files/mssql_install.sh
 
