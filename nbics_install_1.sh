@@ -134,9 +134,9 @@ fi
 FILElinks3=SkiaSharp.dll
 if [ ! -f "$FILElinks3" ]; then
     wget https://nbics.net/SiteResurses/BaseProject/SkiaSharp.dll
-    a19a="+ 11. Скачан архив с базой данных"
+    a19a="+ 11. Скачан файл SkiaSharp.dll"
 else
-    a20a="- 11. Архив с базой данных уже есть в каталоге /home/download/, поэтому не нуждается в скачивании"
+    a20a="- 11. Файл SkiaSharp.dll уже есть в каталоге /home/download/, поэтому не нуждается в скачивании"
 fi 
 # ==================================================================
 
