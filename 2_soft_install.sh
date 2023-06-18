@@ -11,4 +11,6 @@ apt-get -y -q install unzip
 apt-get -y -q install mc
 apt-get -y -q install gnupg2
 apt-get -y -q install lua5.2
+apt-get -y -q install socat
+apt-get -y -q install certbot
 
