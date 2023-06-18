@@ -198,6 +198,14 @@ sed -i -e '22a\    client_max_body_size 1000m'  /etc/nginx/nginx.conf
 a28="  19. Увеличено до 1000 ограничение на размер файлов для Nginx"
 # ==================================================================
 
+# 8. Даём права для nginx на каталог с сайтом
+chown -R www-data:www-data /var/www/
+chmod -R 755 /var/www/
+a29="  20. Выданы права для nginx на каталог с сайтом"
+# ==================================================================
+
+
+
 # 8. Устанавливаем DotNET
 wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 dpkg -i packages-microsoft-prod.deb
