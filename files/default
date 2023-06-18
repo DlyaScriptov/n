@@ -22,4 +22,5 @@ server {
     location ~ /web.config {
         deny all;
     }
+}
 
