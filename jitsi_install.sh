@@ -37,9 +37,8 @@ apt update
 echo "jitsi-videobridge jitsi-videobridge/jvb-hostname string $domainNameForJitsi" | debconf-set-selections
 export DEBIAN_FRONTEND=noninteractive
 
-# 6. Устанавливаем jitsi-meet, а также программы для выпуска сертификата
+# 6. Устанавливаем jitsi-meet
 apt-get -y -q install jitsi-meet
-apt-get -y -q install socat certbot
 
 # Команды для автоматического ввода электронной почты в файл install-letsencrypt-cert.sh, но они ещё не доработаны
 #sed -i -e 's/EMAIL=$1/EMAIL=$jitsiEmail/' /usr/share/jitsi-meet/scripts/install-letsencrypt-cert.sh
