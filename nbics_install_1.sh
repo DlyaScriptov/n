@@ -228,7 +228,7 @@ cd /usr/lib/
 chmod +x SkiaSharp.dll
 cd $pwdScan
 a32="  23. Скопирован файл SkiaSharp.dll в нужные каталоги и выданы на него права"
-
+# ==================================================================
 
 # 9. Устанавливаем SQL Server
 #sed -i -e "s|<YourStrong!Passw0rd>|$nbicsPasswordDataBase|" ./files/mssql_install.sh
@@ -269,4 +269,9 @@ echo $a25
 echo $a26
 echo $a27
 echo $a28
+echo $a29
+echo $a30
+echo $a31
+echo $a32
+#echo $a33
 echo -en "\033[32m ====================================================== \033[0m \n"
