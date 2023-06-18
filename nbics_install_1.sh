@@ -204,9 +204,12 @@ chmod -R 755 /var/www/
 a29="  20. Выданы права для nginx на каталог с сайтом"
 # ==================================================================
 
+# 9. Перезагружаем службу Nginx
+systemctl restart nginx
+a30="  21. Перезагружена служба Nginx"
+# ==================================================================
 
-
-# 8. Устанавливаем DotNET
+# 10. Устанавливаем DotNET
 wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 dpkg -i packages-microsoft-prod.deb
 rm -f packages-microsoft-prod.deb
@@ -215,7 +218,7 @@ apt-get -y -q install dotnet-sdk-7.0
 apt-get -y -q update
 apt-get -y -q install aspnetcore-runtime-7.0
 apt-get -y -q install libgdiplus
-
+a31="  22. Установлены DotNET и библиотека libgdiplus"
 # ==================================================================
 
 # 9. Устанавливаем SQL Server
