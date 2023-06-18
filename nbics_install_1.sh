@@ -231,10 +231,11 @@ a32="  23. Скопирован файл SkiaSharp.dll в нужные ката�
 # ==================================================================
 
 # 9. Устанавливаем SQL Server
-#sed -i -e "s|<YourStrong!Passw0rd>|$nbicsPasswordDataBase|" ./files/mssql_install.sh
-#sed -i -e "s|localhost|$hostnameScan|" ./files/mssql_install.sh
-
-#source ./files/mssql_install.sh
+sed -i -e "s|<YourStrong!Passw0rd>|$nbicsPasswordDataBase|" ./files/mssql_install.sh
+sed -i -e "s|localhost|$hostnameScan|" ./files/mssql_install.sh
+source ./files/mssql_install.sh
+a33="  24. Установлен SQL Server и восстановлена база данных TestDB"
+# ==================================================================
 
 echo -en "\033[32m ====================================================== \033[0m \n"
 echo -en "\033[32m Скрипт завершён. Лог установки: \033[0m \n"
@@ -273,5 +274,5 @@ echo $a29
 echo $a30
 echo $a31
 echo $a32
-#echo $a33
+echo $a33
 echo -en "\033[32m ====================================================== \033[0m \n"
