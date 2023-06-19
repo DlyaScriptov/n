@@ -340,15 +340,19 @@ repoargs="$(curl https://packages.microsoft.com/config/ubuntu/20.04/mssql-server
 add-apt-repository "${repoargs}"
 repoargs="$(curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list)"
 add-apt-repository "${repoargs}"
+a35="  24. Скачаны репозитории и ключи для SQL Server и инструментов командной строки"
 
 apt-get - y -q update
 apt-get - y -q install mssql-server
+a36="  25. Установлен SQL Server"
 
 MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD \
      MSSQL_PID=$MSSQL_PID \
      /opt/mssql/bin/mssql-conf -n setup accept-eula
+a37="  26. Настроен SQL Server (пароль администратора, также задана экспресс-версия)"
 
 ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
+a38="  27. Установлены инструменты командной строки для SQL Server"
 
 echo PATH="$PATH:/opt/mssql-tools/bin" >> ~/.bash_profile
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
