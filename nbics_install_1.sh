@@ -283,6 +283,7 @@ a38="  27. Установлены инструменты командной ст
 echo PATH="$PATH:/opt/mssql-tools/bin" >> ~/.bash_profile
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 source ~/.bashrc
+a39="  28. Настроена видимость инструментов командной строки из любых подкаталогов"
 
 if [ ! -z $SQL_ENABLE_AGENT ]
 then
@@ -296,8 +297,10 @@ then
 fi
 
 ufw reload
+a40="  29. Перезагружен брандмауэр ufw"
 
 systemctl restart mssql-server
+a41="  29. Перезагружен SQL Server"
 
 counter=1
 errstatus=1
