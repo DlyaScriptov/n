@@ -230,11 +230,17 @@ cd $pwdScan
 a32="  23. Скопирован файл SkiaSharp.dll в нужные каталоги и выданы на него права"
 # ==================================================================
 
-# 9. Устанавливаем SQL Server
+# 12. Устанавливаем SQL Server
 sed -i -e "s|<YourStrong!Passw0rd>|$nbicsPasswordDataBase|" ./files/mssql_install.sh
 sed -i -e "s|localhost|$hostnameScan|" ./files/mssql_install.sh
 source ./files/mssql_install.sh
 a33="  24. Установлен SQL Server и восстановлена база данных TestDB"
+# ==================================================================
+
+# 13. Возвращаем исходный вид скрипту установки SQL Server
+sed -i -e "s|$nbicsPasswordDataBase|<YourStrong!Passw0rd>|" ./files/mssql_install.sh
+sed -i -e "s|$hostnameScan|localhost|" ./files/mssql_install.sh
+a34="  25. Возвращён исходный вид скрипта установки SQL Server"
 # ==================================================================
 
 echo -en "\033[32m ====================================================== \033[0m \n"
