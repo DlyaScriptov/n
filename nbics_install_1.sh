@@ -226,29 +226,7 @@ cp /home/download/SkiaSharp.dll /var/www/html/"$nbicsNameDomain"/
 cp /home/download/SkiaSharp.dll /usr/lib/
 cd /usr/lib/
 chmod +x SkiaSharp.dll
-cd $pwdScan
-a32="  23. Скопирован файл SkiaSharp.dll в нужные каталоги и выданы на него права"
-# ==================================================================
-
-# 000. Устанавливаем SQL Server
-#sed -i -e "s|<YourStrong!Passw0rd>|$nbicsPasswordDataBase|" ./files/mssql_install.sh
-#sed -i -e "s|localhost|$hostnameScan|" ./files/mssql_install.sh
-#source ./files/mssql_install.sh
-#a33="  24. Установлен SQL Server и восстановлена база данных TestDB"
-# ==================================================================
-
-# 000. Возвращаем исходный вид скрипту установки SQL Server
-#sed -i -e "s|$nbicsPasswordDataBase|<YourStrong!Passw0rd>|" ./files/mssql_install.sh
-#sed -i -e "s|$hostnameScan|localhost|" ./files/mssql_install.sh
-#a34="  25. Возвращён исходный вид скрипту установки SQL Server"
-# ==================================================================
-# ==================================================================
-# ==================================================================
-# ==================================================================
-# ==================================================================
-
-# 12. Устанавливаем SQL Server (модифицированный сторонний скрипт)
-apt-get - y -q remove mssql-server
+cd $pwdScanapt-get - y -q remove mssql-server
 apt-get - y -q remove mssql-tools unixodbc-dev
 
 MSSQL_SA_PASSWORD='<YourStrong!Passw0rd>'
@@ -320,6 +298,101 @@ fi
 
 /opt/mssql-tools/bin/sqlcmd \
     -S localhost \
+    -U SA \
+    -P $MSSQL_SA_PASSWORD \
+    -Q "USE [master] RESTORE DATABASE [TestDB] FROM  DISK = N'/var/opt/db/BACKUP/TestDB.bak' WITH  FILE = 1, MOVE N'VSM_Gusev1_Web' TO N'/var/opt/db/DATA/ExtraSql/TestDB.mdf', MOVE N'VSM_Gusev1_Web_MSGS' TO N'/var/opt/db/DATA/ExtraSql/TestDB.ndf', MOVE N'VSM_Gusev1_Web_1' TO N'/var/opt/db/LOG/ExtraSql/TestDB_1.ldf',  NOUNLOAD,  STATS = 5"
+a32="  23. Скопирован файл SkiaSharp.dll в нужные каталоги и выданы на него права"
+# ==================================================================
+
+# 000. Устанавливаем SQL Server
+#sed -i -e "s|<YourStrong!Passw0rd>|$nbicsPasswordDataBase|" ./files/mssql_install.sh
+#sed -i -e "s|localhost|$hostnameScan|" ./files/mssql_install.sh
+#source ./files/mssql_install.sh
+#a33="  24. Установлен SQL Server и восстановлена база данных TestDB"
+# ==================================================================
+
+# 000. Возвращаем исходный вид скрипту установки SQL Server
+#sed -i -e "s|$nbicsPasswordDataBase|<YourStrong!Passw0rd>|" ./files/mssql_install.sh
+#sed -i -e "s|$hostnameScan|localhost|" ./files/mssql_install.sh
+#a34="  25. Возвращён исходный вид скрипту установки SQL Server"
+# ==================================================================
+# ==================================================================
+# ==================================================================
+# ==================================================================
+# ==================================================================
+
+# 12. Устанавливаем SQL Server (модифицированный сторонний скрипт)
+apt-get - y -q remove mssql-server
+apt-get - y -q remove mssql-tools unixodbc-dev
+
+MSSQL_SA_PASSWORD='$nbicsPasswordDataBase'
+MSSQL_PID='express'
+SQL_ENABLE_AGENT='y'
+
+if [ -z $MSSQL_SA_PASSWORD ]
+then
+  echo "Переменная окружения MSSQL_SA_PASSWORD должна быть задана для автоматической установки"
+  exit 1
+fi
+
+curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+repoargs="$(curl https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2022.list)"
+add-apt-repository "${repoargs}"
+repoargs="$(curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list)"
+add-apt-repository "${repoargs}"
+
+apt-get - y -q update
+apt-get - y -q install mssql-server
+
+MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD \
+     MSSQL_PID=$MSSQL_PID \
+     /opt/mssql/bin/mssql-conf -n setup accept-eula
+
+ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
+
+echo Adding SQL Server tools to your path...
+echo PATH="$PATH:/opt/mssql-tools/bin" >> ~/.bash_profile
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+source ~/.bashrc
+
+if [ ! -z $SQL_ENABLE_AGENT ]
+then
+  echo Enabling SQL Server Agent...
+  /opt/mssql/bin/mssql-conf set sqlagent.enabled true
+fi
+
+if [ ! -z $SQL_INSTALL_FULLTEXT ]
+then
+    apt-get - y -q install mssql-server-fts
+fi
+
+ufw reload
+
+systemctl restart mssql-server
+
+counter=1
+errstatus=1
+while [ $counter -le 5 ] && [ $errstatus = 1 ]
+do
+  echo "Подождите, запускается SQL Server..."
+  sleep 3s
+  /opt/mssql-tools/bin/sqlcmd \
+    -S localhost \
+    -U SA \
+    -P $MSSQL_SA_PASSWORD \
+    -Q "SELECT @@VERSION" 2>/dev/null
+  errstatus=$?
+  ((counter++))
+done
+
+if [ $errstatus = 1 ]
+then
+  echo "Нет подключения к SQL Server, установка прервана"
+  exit $errstatus
+fi
+
+/opt/mssql-tools/bin/sqlcmd \
+    -S $hostnameScan \
     -U SA \
     -P $MSSQL_SA_PASSWORD \
     -Q "USE [master] RESTORE DATABASE [TestDB] FROM  DISK = N'/var/opt/db/BACKUP/TestDB.bak' WITH  FILE = 1, MOVE N'VSM_Gusev1_Web' TO N'/var/opt/db/DATA/ExtraSql/TestDB.mdf', MOVE N'VSM_Gusev1_Web_MSGS' TO N'/var/opt/db/DATA/ExtraSql/TestDB.ndf', MOVE N'VSM_Gusev1_Web_1' TO N'/var/opt/db/LOG/ExtraSql/TestDB_1.ldf',  NOUNLOAD,  STATS = 5"
