@@ -350,7 +350,6 @@ MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD \
 
 ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
 
-echo Adding SQL Server tools to your path...
 echo PATH="$PATH:/opt/mssql-tools/bin" >> ~/.bash_profile
 echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 source ~/.bashrc
@@ -377,7 +376,7 @@ do
   echo "Подождите, запускается SQL Server..."
   sleep 3s
   /opt/mssql-tools/bin/sqlcmd \
-    -S localhost \
+    -S $hostnameScan \
     -U SA \
     -P $MSSQL_SA_PASSWORD \
     -Q "SELECT @@VERSION" 2>/dev/null
