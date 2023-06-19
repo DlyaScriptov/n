@@ -300,7 +300,7 @@ ufw reload
 a40="  29. Перезагружен брандмауэр ufw"
 
 systemctl restart mssql-server
-a41="  29. Перезагружен SQL Server"
+a41="  30. Перезагружен SQL Server"
 
 counter=1
 errstatus=1
@@ -320,6 +320,7 @@ done
 if [ $errstatus = 1 ]
 then
   echo "Нет подключения к SQL Server, установка прервана"
+  a42="  31. Нет подключения к SQL Server, установка прервана"
   exit $errstatus
 fi
 
@@ -328,6 +329,8 @@ fi
     -U SA \
     -P $MSSQL_SA_PASSWORD \
     -Q "USE [master] RESTORE DATABASE [TestDB] FROM  DISK = N'/var/opt/db/BACKUP/TestDB.bak' WITH  FILE = 1, MOVE N'VSM_Gusev1_Web' TO N'/var/opt/db/DATA/ExtraSql/TestDB.mdf', MOVE N'VSM_Gusev1_Web_MSGS' TO N'/var/opt/db/DATA/ExtraSql/TestDB.ndf', MOVE N'VSM_Gusev1_Web_1' TO N'/var/opt/db/LOG/ExtraSql/TestDB_1.ldf',  NOUNLOAD,  STATS = 5"
+a43="  31. База данных восстановлена из резервной копии."
+a44="      Установка NBICS завершена."
 # ==================================================================
 
 # 14. Записываем произведённые скриптом действия в лог (вывод в консоль)
