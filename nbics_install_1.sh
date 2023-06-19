@@ -193,8 +193,8 @@ cd $pwdScan
 # ==================================================================
 
 # 7. Увеличиваем ограничение на размер файлов для Nginx
-sed -i -e "s|client_max_body_size 1000m||"  /etc/nginx/nginx.conf
-sed -i -e '22a\    client_max_body_size 1000m'  /etc/nginx/nginx.conf
+sed -i -e "s|client_max_body_size 1000m;||"  /etc/nginx/nginx.conf
+sed -i -e '22a\        client_max_body_size 1000m;'  /etc/nginx/nginx.conf
 a28="  19. Увеличено до 1000 ограничение на размер файлов для Nginx"
 # ==================================================================
 
