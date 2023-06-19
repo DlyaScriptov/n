@@ -248,8 +248,8 @@ a32="  23. Скопирован файл SkiaSharp.dll в нужные ката�
 # ==================================================================
 
 # 12. Устанавливаем SQL Server (модифицированный сторонний скрипт)
-apt-get - y -q remove mssql-server
-apt-get - y -q remove mssql-tools unixodbc-dev
+apt-get -y -q remove mssql-server
+apt-get -y -q remove mssql-tools unixodbc-dev
 
 MSSQL_SA_PASSWORD='$nbicsPasswordDataBase'
 MSSQL_PID='express'
@@ -268,8 +268,8 @@ repoargs="$(curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list)"
 add-apt-repository "${repoargs}"
 a35="  24. Скачаны репозитории и ключи для SQL Server и инструментов командной строки"
 
-apt-get - y -q update
-apt-get - y -q install mssql-server
+apt-get -y -q update
+apt-get -y -q install mssql-server
 a36="  25. Установлен SQL Server"
 
 MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD \
@@ -293,7 +293,7 @@ fi
 
 if [ ! -z $SQL_INSTALL_FULLTEXT ]
 then
-    apt-get - y -q install mssql-server-fts
+    apt-get -y -q install mssql-server-fts
 fi
 
 ufw reload
