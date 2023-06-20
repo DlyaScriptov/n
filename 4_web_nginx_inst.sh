@@ -3,7 +3,7 @@
 systemctl stop nginx
 systemctl disable nginx
 apt-get -y -q purge nginx nginx-common
-apt-get -y -q autoremove
+# apt-get -y -q autoremove
 rm -rf /etc/nginx
 rm -rf /etc/default/nginx
 rm -rf /etc/init.d/nginx
