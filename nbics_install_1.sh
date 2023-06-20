@@ -253,13 +253,13 @@ apt-get -y -q remove mssql-tools unixodbc-dev
 
 MSSQL_SA_PASSWORD='$nbicsPasswordDataBase'
 MSSQL_PID='express'
-SQL_ENABLE_AGENT='y'
+#SQL_ENABLE_AGENT='y'
 
-if [ -z $MSSQL_SA_PASSWORD ]
-then
-  echo "Переменная окружения MSSQL_SA_PASSWORD должна быть задана для автоматической установки"
-  exit 1
-fi
+#if [ -z $MSSQL_SA_PASSWORD ]
+#then
+  #echo "Переменная окружения MSSQL_SA_PASSWORD должна быть задана для автоматической установки"
+  #exit 1
+#fi
 
 curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 repoargs="$(curl https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2022.list)"
@@ -285,16 +285,16 @@ echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 source ~/.bashrc
 a39="  28. Настроена видимость инструментов командной строки из любых подкаталогов"
 
-if [ ! -z $SQL_ENABLE_AGENT ]
-then
-  echo Enabling SQL Server Agent...
-  /opt/mssql/bin/mssql-conf set sqlagent.enabled true
-fi
+#if [ ! -z $SQL_ENABLE_AGENT ]
+#then
+  #echo Enabling SQL Server Agent...
+  #/opt/mssql/bin/mssql-conf set sqlagent.enabled true
+#fi
 
-if [ ! -z $SQL_INSTALL_FULLTEXT ]
-then
-    apt-get -y -q install mssql-server-fts
-fi
+#if [ ! -z $SQL_INSTALL_FULLTEXT ]
+#then
+    #apt-get -y -q install mssql-server-fts
+#fi
 
 ufw reload
 a40="  29. Перезагружен брандмауэр ufw"
