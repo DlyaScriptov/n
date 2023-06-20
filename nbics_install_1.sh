@@ -272,9 +272,7 @@ apt-get -y -q update
 apt-get -y -q install mssql-server
 a36="  25. Установлен SQL Server"
 
-MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD \
-     MSSQL_PID=$MSSQL_PID \
-     /opt/mssql/bin/mssql-conf -n setup accept-eula
+MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD MSSQL_PID=$MSSQL_PID /opt/mssql/bin/mssql-conf -n setup accept-eula
 a37="  26. Настроен SQL Server (пароль администратора, также задана экспресс-версия)"
 
 ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
@@ -302,27 +300,23 @@ a40="  29. Перезагружен брандмауэр ufw"
 systemctl restart mssql-server
 a41="  30. Перезагружен SQL Server"
 
-#counter=1
-#errstatus=1
-#while [ $counter -le 5 ] && [ $errstatus = 1 ]
-#do
-  #echo "Подождите, запускается SQL Server..."
-  #sleep 3s
-  #/opt/mssql-tools/bin/sqlcmd \
-    #-S $hostnameScan \
-    #-U SA \
-    #-P $MSSQL_SA_PASSWORD \
-    #-Q "SELECT @@VERSION" 2>/dev/null
-  #errstatus=$?
-  #((counter++))
-#done
+counter=1
+errstatus=1
+while [ $counter -le 5 ] && [ $errstatus = 1 ]
+do
+  echo "Подождите, запускается SQL Server..."
+  sleep 3s
+  /opt/mssql-tools/bin/sqlcmd -S $hostnameScan -U SA -P $MSSQL_SA_PASSWORD -Q "SELECT @@VERSION" 2>/dev/null
+  errstatus=$?
+  ((counter++))
+done
 
-#if [ $errstatus = 1 ]
-#then
-  #echo "Нет подключения к SQL Server, установка прервана"
-  #a42="  31. Нет подключения к SQL Server, установка прервана"
-  #exit $errstatus
-#fi
+if [ $errstatus = 1 ]
+then
+  echo "Нет подключения к SQL Server, установка прервана"
+  a42="  31. Нет подключения к SQL Server, установка прервана"
+  exit $errstatus
+fi
 
 /opt/mssql-tools/bin/sqlcmd \
     -S $hostnameScan \
