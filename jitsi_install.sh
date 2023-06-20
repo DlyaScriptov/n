@@ -12,7 +12,7 @@ read -p "Введите пароль организатора конференц
 
 # 1. Удаляем остатки Jitsi (если есть)
 apt-get -y -q purge jigasi prosody jitsi-meet jitsi-meet-web-config jitsi-meet-prosody jitsi-meet-turnserver jitsi-meet-web jicofo jitsi-videobridge2 jitsi-videobridge
-apt-get -y -q autoremove
+# apt-get -y -q autoremove
 
 rm -rf /etc/prosody
 rm -rf /var/lib/prosody
