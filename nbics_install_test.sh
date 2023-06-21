@@ -267,18 +267,18 @@ apt-get -y -q remove mssql-tools unixodbc-dev
 rm -f /etc/apt/trusted.gpg.d/microsoft-prod.gpg
 rm -f /etc/apt/sources.list.d/microsoft-prod.list
 rm -f /etc/apt/sources.list.d/microsoft-prod.list.save
-sed -i -e "s|deb [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main||" /etc/apt/sources.list
-sed -i -e "s|# deb-src [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main||" /etc/apt/sources.list
-sed -i -e "s|deb [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main||" /etc/apt/sources.list
-sed -i -e "s|# deb-src [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main||" /etc/apt/sources.list
-sed -i -e "s|deb [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main||" /etc/apt/sources.list
-sed -i -e "s|# deb-src [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main||" /etc/apt/sources.list
-sed -i -e "s|deb [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main||" /etc/apt/sources.list.save
-sed -i -e "s|# deb-src [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main||" /etc/apt/sources.list.save
-sed -i -e "s|deb [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main||" /etc/apt/sources.list.save
-sed -i -e "s|# deb-src [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main||" /etc/apt/sources.list.save
-sed -i -e "s|deb [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main||" /etc/apt/sources.list.save
-sed -i -e "s|# deb-src [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main||" /etc/apt/sources.list.save
+sed -i '|deb [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main|d' /etc/apt/sources.list
+sed -i '|# deb-src [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main|d' /etc/apt/sources.list
+sed -i '|deb [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main|d' /etc/apt/sources.list
+sed -i '|# deb-src [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main|d' /etc/apt/sources.list
+sed -i '|deb [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main|d' /etc/apt/sources.list
+sed -i '|# deb-src [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main|d' /etc/apt/sources.list
+sed -i '|deb [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main|d' /etc/apt/sources.list.save
+sed -i '|# deb-src [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main|d' /etc/apt/sources.list.save
+sed -i '|deb [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main|d' /etc/apt/sources.list.save
+sed -i '|# deb-src [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main|d' /etc/apt/sources.list.save
+sed -i '|deb [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main|d' /etc/apt/sources.list.save
+sed -i '|# deb-src [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main|d' /etc/apt/sources.list.save
 
 
 a44="      Установка NBICS завершена."
