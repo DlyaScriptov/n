@@ -161,7 +161,7 @@ a22="  13. Распакован архив с базой данных"
 echo -n > /home/download/school-sample.nbics.net/appsettings.json
 cd $pwdScan
 # cp ./files/appsettings.json /home/download/update-school-sample.nbics.net/appsettings.json
-cp ./files/appsettings.json /home/download/school-sample.nbics.net/appsettings.jso
+cp ./files/appsettings.json /home/download/school-sample.nbics.net/appsettings.json
 cd /home/download
 # sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" ./update-school-sample.nbics.net/appsettings.json
 # sed -i -e "s|SA_PASSWORD_BD|$nbicsPasswordDataBase|" ./update-school-sample.nbics.net/appsettings.json
