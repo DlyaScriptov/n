@@ -214,8 +214,10 @@ wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.
 dpkg -i packages-microsoft-prod.deb
 rm -f packages-microsoft-prod.deb
 apt-get -y -q update
+apt-get -y -q install dotnet-sdk-5.0
 apt-get -y -q install dotnet-sdk-7.0
 apt-get -y -q update
+apt-get -y -q install aspnetcore-runtime-5.0
 apt-get -y -q install aspnetcore-runtime-7.0
 apt-get -y -q install libgdiplus
 a31="  22. Установлены DotNET и библиотека libgdiplus"
@@ -251,6 +253,22 @@ a32="  23. Скопирован файл SkiaSharp.dll в нужные ката�
 apt-get -y -q remove mssql-server
 apt-get -y -q remove mssql-tools unixodbc-dev
 
+rm -f /etc/apt/trusted.gpg.d/microsoft-prod.gpg
+rm -f /etc/apt/sources.list.d/microsoft-prod.list
+rm -f /etc/apt/sources.list.d/microsoft-prod.list.save
+sed -i -e "s|deb [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main||" /etc/apt/sources.list
+sed -i -e "s|# deb-src [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main||" /etc/apt/sources.list
+sed -i -e "s|deb [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main||" /etc/apt/sources.list
+sed -i -e "s|# deb-src [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main||" /etc/apt/sources.list
+sed -i -e "s|deb [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main||" /etc/apt/sources.list
+sed -i -e "s|# deb-src [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main||" /etc/apt/sources.list
+sed -i -e "s|deb [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main||" /etc/apt/sources.list.save
+sed -i -e "s|# deb-src [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2019 focal main||" /etc/apt/sources.list.save
+sed -i -e "s|deb [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main||" /etc/apt/sources.list.save
+sed -i -e "s|# deb-src [arch=arm64,armhf,amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main||" /etc/apt/sources.list.save
+sed -i -e "s|deb [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main||" /etc/apt/sources.list.save
+sed -i -e "s|# deb-src [arch=armhf,arm64,amd64] https://packages.microsoft.com/ubuntu/20.04/mssql-server-2022 focal main||" /etc/apt/sources.list.save
+
 MSSQL_SA_PASSWORD='$nbicsPasswordDataBase'
 MSSQL_PID='express'
 #SQL_ENABLE_AGENT='y'
@@ -262,7 +280,8 @@ MSSQL_PID='express'
 #fi
 
 curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-repoargs="$(curl https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2022.list)"
+# repoargs="$(curl https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2022.list)"
+repoargs="$(curl https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2019.list)"
 add-apt-repository "${repoargs}"
 repoargs="$(curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list)"
 add-apt-repository "${repoargs}"
