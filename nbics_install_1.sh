@@ -354,10 +354,15 @@ fi
     -P $MSSQL_SA_PASSWORD \
     -Q "USE [master] RESTORE DATABASE [TestDB] FROM  DISK = N'/var/opt/db/BACKUP/TestDB.bak' WITH  FILE = 1, MOVE N'VSM_Gusev1_Web' TO N'/var/opt/db/DATA/ExtraSql/TestDB.mdf', MOVE N'VSM_Gusev1_Web_MSGS' TO N'/var/opt/db/DATA/ExtraSql/TestDB.ndf', MOVE N'VSM_Gusev1_Web_1' TO N'/var/opt/db/LOG/ExtraSql/TestDB_1.ldf',  NOUNLOAD,  STATS = 5"
 a43="  31. База данных восстановлена из резервной копии."
-a44="      Установка NBICS завершена."
+
+# 13. Запускаем службу Kestrel
+systemctl enable kestrel-"$nbicsNameDomain"-service.service
+systemctl start kestrel-"$nbicsNameDomain"-service.service
+a44="  32. Запущена служба Kestrel."
+a45="      Установка NBICS завершена."
 # ==================================================================
 
-# 13. Записываем произведённые скриптом действия в лог (вывод в консоль)
+# 14. Записываем произведённые скриптом действия в лог (вывод в консоль)
 echo -en "\033[32m ====================================================== \033[0m \n"
 echo -en "\033[32m Скрипт завершён. Лог установки: \033[0m \n"
 echo -en "\033[32m ------------------------------------------------------ \033[0m \n"
@@ -407,4 +412,5 @@ echo $a41
 echo $a42
 echo $a43
 echo $a44
+echo $a45
 echo -en "\033[32m ====================================================== \033[0m \n"
