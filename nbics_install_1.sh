@@ -115,7 +115,8 @@ fi
 
 # 3. Скачиваем архивы с сайтом и базой данных, а также файл SkiaSharp.dll
 cd /home/download
-FILElinks1=update-school-sample.nbics.net.zip
+# FILElinks1=update-school-sample.nbics.net.zip
+FILElinks1=school-sample.nbics.net.zip
 if [ ! -f "$FILElinks1" ]; then
     # wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC" -O update-school-sample.nbics.net.zip && rm -rf /tmp/cookies.txt
     wget https://nbics.net/SiteResurses/BaseProject/school-sample.nbics.net.zip
