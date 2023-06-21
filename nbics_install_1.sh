@@ -117,7 +117,8 @@ fi
 cd /home/download
 FILElinks1=update-school-sample.nbics.net.zip
 if [ ! -f "$FILElinks1" ]; then
-    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC" -O update-school-sample.nbics.net.zip && rm -rf /tmp/cookies.txt
+    # wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1OZgcIORQVUiB_dovBPPiyB2L3iuIWpuC" -O update-school-sample.nbics.net.zip && rm -rf /tmp/cookies.txt
+    wget https://nbics.net/SiteResurses/BaseProject/school-sample.nbics.net.zip
     a17="+ 9. Скачан архив с сайтом"
 else
     a18="- 9. Архив с сайтом уже есть в каталоге /home/download/, поэтому не нуждается в скачивании"
@@ -125,7 +126,8 @@ fi
 
 FILElinks2=TestDB.zip
 if [ ! -f "$FILElinks2" ]; then
-    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--" -O TestDB.zip && rm -rf /tmp/cookies.txt
+    # wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\n/p')&id=1px2z-TirY15P_zkjE9KEbot5JYGCL8--" -O TestDB.zip && rm -rf /tmp/cookies.txt
+    wget https://nbics.net/SiteResurses/BaseProject/TestDB.zip
     a19="+ 10. Скачан архив с базой данных"
 else
     a20="- 10. Архив с базой данных уже есть в каталоге /home/download/, поэтому не нуждается в скачивании"
@@ -142,7 +144,8 @@ fi
 
 # 4. Распаковываем архивы
 # 4.1. Распаковываем архив с сайтом
-unzip /home/download/update-school-sample.nbics.net.zip
+# unzip /home/download/update-school-sample.nbics.net.zip
+unzip /home/download/school-sample.nbics.net.zip
 a21="  12. Распакован архив с сайтом"
 # ........................................
 
@@ -154,19 +157,26 @@ a22="  13. Распакован архив с базой данных"
 # 5. Переименовываем каталог с сайтом (назначаем ему имя домена)
 #    И меняем настройки в файле appsettings.json
 # 5.1. Меняем настройки в файле appsettings.json
-echo -n > /home/download/update-school-sample.nbics.net/appsettings.json
+# echo -n > /home/download/update-school-sample.nbics.net/appsettings.json
+echo -n > /home/download/school-sample.nbics.net/appsettings.json
 cd $pwdScan
-cp ./files/appsettings.json /home/download/update-school-sample.nbics.net/appsettings.json
+# cp ./files/appsettings.json /home/download/update-school-sample.nbics.net/appsettings.json
+cp ./files/appsettings.json /home/download/school-sample.nbics.net/appsettings.jso
 cd /home/download
-sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" ./update-school-sample.nbics.net/appsettings.json
-sed -i -e "s|SA_PASSWORD_BD|$nbicsPasswordDataBase|" ./update-school-sample.nbics.net/appsettings.json
-sed -i -e "s|NAME_SERVER|$hostnameScan|" ./update-school-sample.nbics.net/appsettings.json
-sed -i -e "s|NAME_DATABASE|TestDB|" ./update-school-sample.nbics.net/appsettings.json
+# sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" ./update-school-sample.nbics.net/appsettings.json
+# sed -i -e "s|SA_PASSWORD_BD|$nbicsPasswordDataBase|" ./update-school-sample.nbics.net/appsettings.json
+# sed -i -e "s|NAME_SERVER|$hostnameScan|" ./update-school-sample.nbics.net/appsettings.json
+# sed -i -e "s|NAME_DATABASE|TestDB|" ./update-school-sample.nbics.net/appsettings.json
+sed -i -e "s|NAME_DOMAIN|$nbicsNameDomain|" ./school-sample.nbics.net/appsettings.json
+sed -i -e "s|SA_PASSWORD_BD|$nbicsPasswordDataBase|" ./school-sample.nbics.net/appsettings.json
+sed -i -e "s|NAME_SERVER|$hostnameScan|" ./school-sample.nbics.net/appsettings.json
+sed -i -e "s|NAME_DATABASE|TestDB|" ./school-sample.nbics.net/appsettings.json
 a23="  14. Очистка файла appsettings.json и заполнение его актуальным текстом"
 # ........................................
 
 # 5.2. Переименовываем каталог с сайтом
-mv update-school-sample.nbics.net $nbicsNameDomain
+# mv update-school-sample.nbics.net $nbicsNameDomain
+mv school-sample.nbics.net $nbicsNameDomain
 a24="  15. Переименован каталог с сайтом (назначено ему такое же имя, как у домена)"
 # ==================================================================
 
